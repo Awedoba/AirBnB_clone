@@ -20,15 +20,23 @@ class BaseModel:
 
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
-                match key:
-                    case "created_at":
-                        self.__dict__["created_at"] = datetime.strptime(
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(
                         kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                    case "updated_at":
-                        self.__dict__["updated_at"] = datetime.strptime(
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(
                         kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                    case _:
-                        self.__dict__[key] = kwargs[key]
+                else:
+                    self.__dict__[key] = kwargs[key]
+                # match key:
+                #     case "created_at":
+                #         self.__dict__["created_at"] = datetime.strptime(
+                #         kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                #     case "updated_at":
+                #         self.__dict__["updated_at"] = datetime.strptime(
+                #         kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                #     case _:
+                #         self.__dict__[key] = kwargs[key]
         else:
             self.id = str(uuid.uuid4())
             self.updated_at = datetime.now()
